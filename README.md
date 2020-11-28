@@ -1,16 +1,55 @@
+# PTUI
+
 PTUI stands for "Portable Terminal UI". It is an ANSI C library that provides
 simple terminal-handling routines that can operate on Linux, Windows and DOS.
 
 The prototype declarations (ptui.h) are common to all platforms, but source
 files are not - each platform needs to build and link to the proper module:
 
-ptui-curse.c   ncurses backend (Linux and Windows, requires libncursesw)
+ptui-curse.c   ncurses-based backend (Linux and Windows, requires libncurses)
 ptui-dj.c      DJGPP driver (DOS, protected mode)
 ptui-dos.c     real-time DOS driver (uses direct MDA/VGA hardware calls)
 
 Project's homepage: https://github.com/mateuszviste/ptui
-Author's homepage : http://mateusz.viste.fr
 
+
+# How to use
+
+Simple example:
+
+    ptui_init();
+    ptui_putchar('H', 0x17, 0, 0);
+    ptui_putchar('e', 0x17, 1, 0);
+    ptui_putchar('l', 0x17, 2, 0);
+    ptui_putchar('l', 0x17, 3, 0);
+    ptui_putchar('o', 0x17, 4, 0);
+    ptui_getkey();  /* wait for a key */
+    ptui_close();
+
+Note about colors: each time a character needs to be output to the terminal, a
+color attribute must be passed along. A color attribute is a single byte value
+that encodes foreground color in its low nibble and background color in its
+high nibble. For instance 0x17 would be white text on blue background, and
+0x0e translates as yellow text on black background.
+
+
+# Dependencies
+
+On non-DOS platforms, this library requires ncursesw. One needs to ensure that
+his program is linked to ncursesw (possibly tinfo, too, depending on your
+distribution and packaging), and make sure that ncursesw prototypes are in the
+include path. Typically, this would be done something like that:
+
+    cc hello.c ptui-curse.c -lncursesw -ltinfo -I/usr/include/ncursesw
+
+
+# Contact
+
+If you'd like to get in contact with this library's author, you will find
+instructions how to do so on his personal homepage: http://mateusz.viste.fr
+
+
+# License
 
 PTUI is published under the MIT license.
 

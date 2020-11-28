@@ -8,6 +8,9 @@ ptui-curse.c   ncurses-based backend (Linux and Windows, requires libncurses)
 ptui-dj.c      DJGPP driver (DOS, protected mode)
 ptui-dos.c     real-time DOS driver (uses direct MDA/VGA hardware calls)
 
+Project's homepage: https://github.com/mateuszviste/ptui
+Author's homepage : http://mateusz.viste.fr
+
 
 PTUI is published under the MIT license.
 

@@ -106,7 +106,7 @@ void ptui_cls(void) {
   attroff(0);
   /* bkgd(COLOR_PAIR(colattr)); */
   move(0,0);
-  ui_refresh();
+  ptui_refresh();
 }
 
 
@@ -117,7 +117,7 @@ void ptui_puts(const char *str) {
 
 void ptui_locate(int y, int x) {
   wmove(mywindow, y, x);
-  ui_refresh();
+  ptui_refresh();
 }
 
 

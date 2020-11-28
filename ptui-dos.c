@@ -89,7 +89,7 @@ void ptui_cls(void) {
   regs.h.dh = term_height - 1;
   regs.h.dl = term_width - 1; /* Lower right */
   int86(0x10, &regs, &regs);
-  ui_locate(0, 0);
+  ptui_locate(0, 0);
 }
 
 

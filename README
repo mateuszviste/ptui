@@ -4,7 +4,7 @@ simple terminal-handling routines that can operate on Linux, Windows and DOS.
 The prototype declarations (ptui.h) are common to all platforms, but source
 files are not - each platform needs to build and link to the proper module:
 
-ptui-curse.c   ncurses-based backend (Linux and Windows, requires libncurses)
+ptui-curse.c   ncurses backend (Linux and Windows, requires libncursesw)
 ptui-dj.c      DJGPP driver (DOS, protected mode)
 ptui-dos.c     real-time DOS driver (uses direct MDA/VGA hardware calls)
 

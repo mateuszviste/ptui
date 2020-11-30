@@ -35,9 +35,6 @@
 #include "ptui.h"  /* include self for control */
 
 
-WINDOW *mywindow;
-
-
 static attr_t getorcreatecolor(int col) {
   static attr_t DOSPALETTE[256] = {0};
   static int lastcolid = 0;
@@ -64,8 +61,7 @@ static attr_t getorcreatecolor(int col) {
 /* inits the UI subsystem */
 int ptui_init(void) {
   setlocale(LC_ALL, "");
-  mywindow = initscr();
-  if (mywindow == NULL) return(-1);
+  if (initscr() == NULL) return(-1); /* returns a ptr to stdscr on success */
   start_color();
   raw();
   noecho();
@@ -83,12 +79,12 @@ void ptui_close(void) {
 
 
 int ptui_getrowcount(void) {
-  return(getmaxy(mywindow));
+  return(getmaxy(stdscr));
 }
 
 
 int ptui_getcolcount(void) {
-  return(getmaxx(mywindow));
+  return(getmaxx(stdscr));
 }
 
 
@@ -96,7 +92,7 @@ void ptui_cls(void) {
   int x, y;
   int maxrows, maxcols;
   clear();
-  getmaxyx(mywindow, maxrows, maxcols);
+  getmaxyx(stdscr, maxrows, maxcols);
   attron(0);
   for (y = 0; y < maxrows; y++) {
     for (x = 0; x < maxcols; x++) {
@@ -116,7 +112,7 @@ void ptui_puts(const char *str) {
 
 
 void ptui_locate(int y, int x) {
-  wmove(mywindow, y, x);
+  move(y, x);
   ptui_refresh();
 }
 
@@ -128,11 +124,11 @@ void ptui_putchar(uint32_t wchar, int attr, int x, int y) {
   memset(&t, 0, sizeof(t));
 
   /* remember cursor position to restore it afterwards */
-  getyx(mywindow, oldy, oldx);
+  getyx(stdscr, oldy, oldx);
 
   t.attr = getorcreatecolor(attr);
   t.chars[0] = wchar;
-  mvwadd_wch(mywindow, y, x, &t);
+  mvadd_wch(y, x, &t);
 
   /* restore cursor to its initial location */
   move(oldy, oldx);
@@ -143,14 +139,14 @@ int ptui_getkey(void) {
   int res;
 
   for (;;) {
-    res = wgetch(mywindow);
+    res = getch();
     if (res == KEY_MOUSE) continue; /* ignore mouse events */
     if (res != ERR) break;          /* ERR means "no input available yet" */
   }
 
   /* either ESC or ALT+some key */
   if (res == 27) {
-    res = wgetch(mywindow);
+    res = getch();
     if (res == ERR) return(27);
     /* else this is an ALT+something combination */
     switch (res) {
@@ -192,7 +188,7 @@ int ptui_getkey(void) {
 int ptui_kbhit(void) {
   int tmp;
   timeout(0);
-  tmp = wgetch(mywindow);
+  tmp = getch();
   timeout(100);
   if (tmp == ERR) return(0);
   ungetch(tmp);
@@ -211,5 +207,5 @@ void ptui_cursor_hide(void) {
 
 
 void ptui_refresh(void) {
-  wrefresh(mywindow);
+  refresh();
 }

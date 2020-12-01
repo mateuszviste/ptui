@@ -112,7 +112,7 @@ void ptui_puts(const char *str) {
 }
 
 
-void ptui_locate(int row, int column) {
+void ptui_locate(int column, int row) {
   union REGS regs;
   regs.h.ah = 0x02;
   regs.h.bh = 0;

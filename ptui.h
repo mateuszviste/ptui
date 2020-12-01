@@ -47,7 +47,7 @@ void ptui_cls(void);
 void ptui_puts(const char *str);
 
 /* Set the position (zero-based) of the cursor on screen */
-void ptui_locate(int y, int x);
+void ptui_locate(int x, int y);
 
 /* Put a char directly on screen, without playing with the cursor. Coordinates are zero-based. */
 void ptui_putchar(uint32_t c, int attr, int x, int y);

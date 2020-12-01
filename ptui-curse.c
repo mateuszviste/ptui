@@ -111,7 +111,7 @@ void ptui_puts(const char *str) {
 }
 
 
-void ptui_locate(int y, int x) {
+void ptui_locate(int x, int y) {
   move(y, x);
   ptui_refresh();
 }

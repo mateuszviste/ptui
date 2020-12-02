@@ -28,10 +28,10 @@
 
 #include "ptui.h"  /* include self for control */
 
-unsigned char far *vmem; /* video memory pointer (beginning of page 0) */
-int term_width = 0, term_height = 0;
-int cursor_start = 0, cursor_end = 0; /* remember the cursor's shape */
-unsigned short videomode = 0;
+static unsigned char far *vmem; /* video memory pointer (beginning of page 0) */
+static int term_width = 0, term_height = 0;
+static int cursor_start = 0, cursor_end = 0; /* remember the cursor's shape */
+static unsigned short videomode = 0;
 
 /* inits the UI subsystem */
 int ptui_init(void) {

@@ -27,8 +27,6 @@
 #ifndef ptui_h_sentinel
 #define ptui_h_sentinel
 
-#include <stdint.h>
-
 /* inits the UI subsystem, 0 on success, non-zero otherwise */
 int ptui_init(void);
 
@@ -50,7 +48,7 @@ void ptui_puts(const char *str);
 void ptui_locate(int x, int y);
 
 /* Put a char directly on screen, without playing with the cursor. Coordinates are zero-based. */
-void ptui_putchar(uint32_t c, int attr, int x, int y);
+void ptui_putchar(unsigned int c, int attr, int x, int y);
 
 /* waits for a key to be pressed and returns it. ALT+keys have 0x100 added to them. */
 int ptui_getkey(void);

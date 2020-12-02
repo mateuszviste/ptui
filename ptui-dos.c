@@ -122,7 +122,7 @@ void ptui_locate(int column, int row) {
 }
 
 
-void ptui_putchar(uint32_t c, int attr, int x, int y) {
+void ptui_putchar(unsigned int c, int attr, int x, int y) {
   unsigned char far *p;
   if (c > 255) c = '.';
   p = vmem + ((y * term_width + x) << 1);

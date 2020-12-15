@@ -58,6 +58,13 @@ static attr_t getorcreatecolor(int col) {
 }
 
 
+/* returns 0 on monochrome terminals, 1 on color terminals */
+int ptui_hascolor(void) {
+  if (has_colors() == TRUE) return(1);
+  return(0);
+}
+
+
 /* inits the UI subsystem */
 int ptui_init(void) {
   setlocale(LC_ALL, "");

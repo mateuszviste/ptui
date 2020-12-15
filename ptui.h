@@ -30,6 +30,10 @@
 /* inits the UI subsystem, 0 on success, non-zero otherwise */
 int ptui_init(void);
 
+/* returns 1 if terminal has color capability, 0 otherwise
+ * this must be called only AFTER ptui_init() */
+int ptui_hascolor(void);
+
 void ptui_close(void);
 
 /* returns the number of rows of current text mode */

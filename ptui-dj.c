@@ -30,6 +30,12 @@
 #include "ptui.h"  /* include self for control */
 
 
+int ptui_hascolor(void) {
+  if (ScreenMode() == 7) return(0);
+  return(1);
+}
+
+
 /* inits the UI subsystem */
 int ptui_init(void) {
   return(0);

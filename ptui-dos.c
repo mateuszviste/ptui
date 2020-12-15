@@ -33,6 +33,12 @@ static int term_width = 0, term_height = 0;
 static int cursor_start = 0, cursor_end = 0; /* remember the cursor's shape */
 static unsigned short videomode = 0;
 
+/* returns 1 if color is supported, 0 otherwise */
+int ptui_hascolor(void) {
+  if (videomode == 7) return(0); /* MDA/herc mode */
+  return(1);
+}
+
 /* inits the UI subsystem */
 int ptui_init(void) {
   union REGS regs;

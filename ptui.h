@@ -51,8 +51,9 @@ void ptui_puts(const char *str);
 /* Set the position (zero-based) of the cursor on screen */
 void ptui_locate(int x, int y);
 
-/* Put a char directly on screen, without playing with the cursor. Coordinates are zero-based. */
-void ptui_putchar(unsigned int c, int attr, int x, int y);
+/* Put a char directly on screen, without playing with the cursor. Coordinates are zero-based.
+ * This may be a "wide" (unicode) codepoint on platforms that support unicode. */
+void ptui_putchar(int c, int attr, int x, int y);
 
 /* waits for a key to be pressed and returns it. ALT+keys have 0x100 added to them. */
 int ptui_getkey(void);

@@ -124,7 +124,7 @@ void ptui_locate(int x, int y) {
 }
 
 
-void ptui_putchar(unsigned int wchar, int attr, int x, int y) {
+void ptui_putchar(int wchar, int attr, int x, int y) {
   int oldx, oldy;
   cchar_t t;
 

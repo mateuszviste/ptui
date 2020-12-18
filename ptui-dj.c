@@ -71,8 +71,7 @@ void ptui_locate(int x, int y) {
 }
 
 
-void ptui_putchar(unsigned int c, int attr, int x, int y) {
-  if (c > 255) c = '.';
+void ptui_putchar(int c, int attr, int x, int y) {
   ScreenPutChar(c, attr, x, y);
 }
 

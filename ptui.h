@@ -27,8 +27,10 @@
 #ifndef ptui_h_sentinel
 #define ptui_h_sentinel
 
-/* inits the UI subsystem, 0 on success, non-zero otherwise */
-int ptui_init(void);
+/* inits the UI subsystem, 0 on success, non-zero otherwise
+ * flags may accept following (possibly OR-ed) flags:
+ *   PTUI_ENABLE_MOUSE    - enable mouse support if available */
+int ptui_init(int flags);
 
 /* returns 1 if terminal has color capability, 0 otherwise
  * this must be called only AFTER ptui_init() */
@@ -55,11 +57,23 @@ void ptui_locate(int x, int y);
  * This may be a "wide" (unicode) codepoint on platforms that support unicode. */
 void ptui_putchar(int c, int attr, int x, int y);
 
-/* waits for a key to be pressed and returns it. ALT+keys have 0x100 added to them. */
+/* waits for a key to be pressed and returns it. ALT+keys have 0x100 added to
+ * them. this may also report a "PTUI_MOUSE" key in case of a mouse click,
+ * in such case call ptui_getmouse() to fetch the details about last click) */
 int ptui_getkey(void);
 
 /* returns 0 if no key is awaiting in the keyboard buffer, non-zero otherwise */
 int ptui_kbhit(void);
+
+/* if mouse support is enabled, set mouse cursor to be:
+ * status == 0    -> hidden
+ * statis != 0    -> not hidden (default)
+ * NOTE: this works only on the MSDOS platform */
+void ptui_mouseshow(int status);
+
+/* fetches the coordinates of the last mouse click. returns -1 if nothing is
+ * pending. */
+int ptui_getmouse(unsigned int *x, unsigned int *y);
 
 /* makes the cursor visible */
 void ptui_cursor_show(void);
@@ -69,5 +83,11 @@ void ptui_cursor_hide(void);
 
 /* tell the UI library to render the screen (ignored on platforms that perform immediate rendering) */
 void ptui_refresh(void);
+
+
+/* some public definitions used by PTUI */
+
+#define PTUI_ENABLE_MOUSE 1 /* may be passed to ptui_init() */
+#define PTUI_MOUSE 0x200   /* returned by ptui_getkey() to advertise a mouse event */
 
 #endif

@@ -37,7 +37,7 @@ int ptui_hascolor(void) {
 
 
 /* inits the UI subsystem */
-int ptui_init(void) {
+int ptui_init(int flags) {
   return(0);
 }
 

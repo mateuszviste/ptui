@@ -35,6 +35,11 @@
 #include "ptui.h"  /* include self for control */
 
 
+/* mouse-related global variables */
+static int lastclick_btn = -1;
+static unsigned short lastclick_x, lastclick_y;
+
+
 static attr_t getorcreatecolor(int col) {
   static attr_t DOSPALETTE[256] = {0};
   static int lastcolid = 0;
@@ -66,7 +71,7 @@ int ptui_hascolor(void) {
 
 
 /* inits the UI subsystem */
-int ptui_init(void) {
+int ptui_init(int flags) {
   setlocale(LC_ALL, "");
   if (initscr() == NULL) return(-1); /* returns a ptr to stdscr on success */
   start_color();
@@ -76,6 +81,10 @@ int ptui_init(void) {
   timeout(100); /* getch blocks for 50ms max */
   set_escdelay(50); /* ESC should wait for 50ms max */
   nonl(); /* allow ncurses to detect KEY_ENTER */
+  /* enable MOUSE? */
+  if (flags & PTUI_ENABLE_MOUSE) {
+    mousemask(BUTTON1_RELEASED, NULL);
+  }
   return(0);
 }
 
@@ -142,12 +151,33 @@ void ptui_putchar(int wchar, int attr, int x, int y) {
 }
 
 
+int ptui_getmouse(unsigned int *x, unsigned *y) {
+  int r = lastclick_btn;
+  if (lastclick_btn < 0) return(-1);
+  *x = lastclick_x;
+  *y = lastclick_y;
+  lastclick_btn = -1;
+  return(r);
+}
+
+
 int ptui_getkey(void) {
   int res;
 
   for (;;) {
     res = getch();
-    if (res == KEY_MOUSE) continue; /* ignore mouse events */
+    if (res == KEY_MOUSE) {
+      MEVENT event;
+      if (getmouse(&event) == OK) {
+        if (event.bstate & BUTTON1_RELEASED) {
+          lastclick_btn = 0;
+          lastclick_x = event.x;
+          lastclick_y = event.y;
+          return(PTUI_MOUSE);
+        }
+      }
+      continue; /* ignore invalid mouse events */
+    }
     if (res != ERR) break;          /* ERR means "no input available yet" */
   }
 
@@ -200,6 +230,10 @@ int ptui_kbhit(void) {
   if (tmp == ERR) return(0);
   ungetch(tmp);
   return(1);
+}
+
+
+void ptui_mouseshow(int status) {
 }
 
 

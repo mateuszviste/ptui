@@ -75,6 +75,9 @@ void ptui_putchar(int c, int attr, int x, int y) {
   ScreenPutChar(c, attr, x, y);
 }
 
+void ptui_putchar_rep(int c, int attr, int x, int y, int r) {
+  while (r--) ScreenPutChar(c, attr, x++, y);
+}
 
 int ptui_getkey(void) {
   return(getkey());

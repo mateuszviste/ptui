@@ -161,6 +161,16 @@ void ptui_putchar(int c, int attr, int x, int y) {
 }
 
 
+void ptui_putchar_rep(int c, int attr, int x, int y, int r) {
+  unsigned char far *p;
+  p = vmem + ((y * term_width + x) << 1);
+  while (r--) {
+    *p++ = c;
+    *p++ = attr;
+  }
+}
+
+
 void ptui_mouseshow(int status) {
   union REGS r;
   if (mousedetected == 0) return;

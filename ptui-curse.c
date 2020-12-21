@@ -151,6 +151,24 @@ void ptui_putchar(int wchar, int attr, int x, int y) {
 }
 
 
+void ptui_putchar_rep(int wchar, int attr, int x, int y, int r) {
+  int oldx, oldy;
+  cchar_t t;
+
+  memset(&t, 0, sizeof(t));
+
+  /* remember cursor position to restore it afterwards */
+  getyx(stdscr, oldy, oldx);
+
+  t.attr = getorcreatecolor(attr);
+  t.chars[0] = wchar;
+  while (r--) mvadd_wch(y, x++, &t);
+
+  /* restore cursor to its initial location */
+  move(oldy, oldx);
+}
+
+
 int ptui_getmouse(unsigned int *x, unsigned *y) {
   int r = lastclick_btn;
   if (lastclick_btn < 0) return(-1);

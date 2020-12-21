@@ -57,6 +57,10 @@ void ptui_locate(int x, int y);
  * This may be a "wide" (unicode) codepoint on platforms that support unicode. */
 void ptui_putchar(int c, int attr, int x, int y);
 
+/* same as ptui_putchar() but draws the character count times (be careful
+ * about line overflow - count chars should never go out of screen!) */
+void ptui_putchar_rep(int c, int attr, int x, int y, int count);
+
 /* waits for a key to be pressed and returns it. ALT+keys have 0x100 added to
  * them. this may also report a "PTUI_MOUSE" key in case of a mouse click,
  * in such case call ptui_getmouse() to fetch the details about last click) */

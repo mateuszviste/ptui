@@ -17,7 +17,7 @@ Project's homepage: https://github.com/mateuszviste/ptui
 
 Simple example:
 
-    ptui_init();
+    ptui_init(0);
     ptui_putchar('H', 0x17, 0, 0);
     ptui_putchar('e', 0x17, 1, 0);
     ptui_putchar('l', 0x17, 2, 0);

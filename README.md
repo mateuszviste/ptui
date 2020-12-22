@@ -37,10 +37,9 @@ high nibble. For instance 0x17 would be white text on blue background, and
 
 On non-DOS platforms, this library requires ncursesw. One needs to ensure that
 his program is linked to ncursesw (possibly tinfo, too, depending on your
-distribution and packaging), and make sure that ncursesw prototypes are in the
-include path. Typically, this would be done something like that:
+distribution and packaging). Typically, this would be something like that:
 
-    cc hello.c ptui-curse.c -lncursesw -ltinfo -I/usr/include/ncursesw
+    cc hello.c ptui-ncurses.c -lncursesw -ltinfo
 
 
 # Contact

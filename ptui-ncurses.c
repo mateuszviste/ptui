@@ -28,7 +28,7 @@
 #define _XOPEN_SOURCE_EXTENDED
 
 #include <locale.h>
-#include <curses.h> /* relates to ncursesw (include dir set in Makefile) */
+#include <ncursesw/curses.h>
 #include <stdio.h> /* this one contains the NULL definition */
 #include <string.h>
 
